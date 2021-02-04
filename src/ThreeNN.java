@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Solution {
+public class ThreeNN {
 
     public static long binarySearch(ArrayList<Long> listFeatures, HashMap<Long, Integer> classValues, long target, int l, int r) {
 

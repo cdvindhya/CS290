@@ -156,7 +156,7 @@ public class countingOccurences {
         int b = 0;
         int c = 0;
         int count = 0;
-        for (int j = 0; j < Q; j++) {
+        for (int j = 0; j < Q; j++) { //Q
             try {
                 a = in.nextInt();
                 b = in.nextInt();
@@ -165,7 +165,7 @@ public class countingOccurences {
                 System.out.println("Encountered IO Exception");
             }
             count = 0;
-            for (int k = a-1; k <= b-1; k++) {
+            for (int k = a-1; k <= b-1; k++) { //N = O(QN)
                 if (arr[k] == c) {
                     count++;
                 }
