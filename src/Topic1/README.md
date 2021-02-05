@@ -1,2 +1,2 @@
-#Topic 1
+# Topic 1
 Key Ideas: Sums, Prefix Sums & Difference Arrays
