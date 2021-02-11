@@ -146,7 +146,7 @@ public class countingOccurrences {
         }
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) { //Time complexity: O(N)
         FastReader in = new FastReader();
         PrintWriter pw = new PrintWriter(System.out);
 
@@ -271,7 +271,6 @@ public class countingOccurrences {
             }
         }
 
-
         int a = 0;
         int b = 0;
         int c = 0;
@@ -362,46 +361,3 @@ public class countingOccurrences {
         pw.close();
     }
 }
-
-    /*public static void main(String[] args) {
-        FastReader in = new FastReader();
-        PrintWriter pw = new PrintWriter(System.out);
-        int N = 0;
-        int Q = 0;
-        try {
-            N = in.nextInt();
-            Q = in.nextInt();
-        } catch (IOException X) {
-            System.out.println("Encountered IO Exception");
-        }
-        int[] arr = new int[N];
-        for (int i = 0; i < N; i++) {
-            try {
-                arr[i] = in.nextInt();
-            } catch (IOException X) {
-                System.out.println("Encountered IO Exception");
-            }
-        }
-        int a = 0;
-        int b = 0;
-        int c = 0;
-        int count = 0;
-        for (int j = 0; j < Q; j++) { //Q
-            try {
-                a = in.nextInt();
-                b = in.nextInt();
-                c = in.nextInt();
-            } catch (IOException X) {
-                System.out.println("Encountered IO Exception");
-            }
-            count = 0;
-            for (int k = a-1; k <= b-1; k++) { //N = O(QN)
-                if (arr[k] == c) {
-                    count++;
-                }
-            }
-            pw.println(count);
-        }
-        pw.flush();
-        pw.close();
-    }*/

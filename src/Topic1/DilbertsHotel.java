@@ -17,7 +17,7 @@ public class DilbertsHotel {
         Arrays.sort(array, comp);
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) { //Time complexity: O(N)
 
         //Input:
         //N=number of groups

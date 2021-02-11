@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 
 public class BytecoinHappiness {
-    public static void main(String[] args) {
+    public static void main(String[] args) { //Time complexity: O(N)
 
       //if the price is X unit more than prev price, he gains x^2 happy
       //if the price is Y unit less than prev price, he loses y^3 happy
