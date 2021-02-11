@@ -8,7 +8,7 @@ public class affineNames {
        Scanner in = new Scanner(System.in);
        int N = in.nextInt();
 
-       HashMap<String, String> map = new HashMap<>();
+       HashMap<String, ArrayList<String>> map = new HashMap<>();
 
        int count = 0;
 
@@ -23,30 +23,54 @@ public class affineNames {
            String initials = getInitials(line);
 
            //check if anything matches
+           //String prev_string = "";
+           ArrayList<String> allMatches = new ArrayList<>();
+           String check = "";
+
+
            if (map.containsKey(name[0].substring(0, 3).toUpperCase())) {
-               String check = map.get(name[0].substring(0, 3).toUpperCase());
-               if(searchName(getInitials(line), check)) {//getInitials(check), line)) {
-                   count++;
+               for (int j = 0; j < map.get(name[0].substring(0, 3).toUpperCase()).size(); j++) {
+                   check = map.get(name[0].substring(0, 3).toUpperCase()).get(j);
+                   if(searchName(getInitials(line), check)) {//getInitials(check), line)) {
+                       count++;
+                       allMatches.add(check);
+                   }
                }
-           } else if (map.containsKey(name[1].substring(0, 3).toUpperCase())) {
-               String check = map.get(name[1].substring(0, 3).toUpperCase());
-               if(searchName(getInitials(line), check)) {//getInitials(check), line)) {
-                   count++;
+           }
+
+           if (map.containsKey(name[1].substring(0, 3).toUpperCase())) {
+               for (int j = 0; j < map.get(name[1].substring(0, 3).toUpperCase()).size(); j++) {
+                   check = map.get(name[1].substring(0, 3).toUpperCase()).get(j);
+                   if(searchName(getInitials(line), check) && !allMatches.contains(check)) {//getInitials(check), line)) {
+                       count++;
+                       allMatches.add(check);
+                   }
                }
-           } else if(map.containsKey(name[2].substring(0, 3).toUpperCase())) {
-               String check = map.get(name[2].substring(0, 3).toUpperCase());
-               if(searchName(getInitials(line), check)) {//getInitials(check), line)) {
-                   count++;
+           }
+
+           if(map.containsKey(name[2].substring(0, 3).toUpperCase())) {
+               for (int j = 0; j < map.get(name[2].substring(0, 3).toUpperCase()).size(); j++) {
+                   check = map.get(name[2].substring(0, 3).toUpperCase()).get(j);
+                   if(searchName(getInitials(line), check) && !allMatches.contains(check)) {//getInitials(check), line)) {
+                       count++;
+                       allMatches.add(check);
+                   }
                }
            }
 
            //put an entry in the hashmap
-           map.put(initials, line);
+           if (map.containsKey(initials.toUpperCase())) {
+               map.get(initials.toUpperCase()).add(line);
+           } else {
+               ArrayList<String> list = new ArrayList<>();
+               list.add(line);
+               map.put(initials.toUpperCase(), list);
+           }
 
        }
 
        //return count
-       System.out.println("Count: " + count);
+       System.out.println(count);
 
     }
 
@@ -54,7 +78,7 @@ public class affineNames {
         String[] name = line.split(" ");
         String initials = "" + name[0].charAt(0)
                 + name[1].charAt(0) + name[2].charAt(0);
-        return initials;
+        return initials.toUpperCase();
     }
 
     public static boolean searchName(String initials, String name2) {
