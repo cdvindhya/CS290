@@ -15,92 +15,53 @@ public class trickRTreat {
         //moving to next line
         in.nextLine();
 
-        //monotonically decreasing queue
-        //monotonic stack
-
-        //reading in the data
-        int[][] data = new int[M*N][2];
-        for (int i = 0; i < M*N; i++) {
-            data[i][0] = in.nextInt(); //taste sore
-            data[i][1] = in.nextInt(); //spare plan
-        }
-
-        //efficient: sliding window: sliding window of length K
-
-        //logic:
-            // find the window of length k of consec 1's
-            // with the largest taste sum.
-            // calculate total sum, sparing the above houses.
-
-        //if k > m*n, spare all houses, calc total sum
-
+        int[][] data = new int[M][N+2];
+        int taste = 0;
+        int plan = -1;
         int sum = 0;
-        int max = 0;
 
-        int housesPassed = 0;
-        int streetsPassed = 0;
-
-        for (int i = 0; i < data.length; i++) {
-
+        for (int i = 0; i < M; i++) {
             sum = 0;
-
-            if (data[i][1] == 1) {
-
-                for (int j = 0; j < K; j++) {
-
-                    //update sum
-                    i = i + j;
-                    if (data[i][1] == 1 && i < data.length) {
-                        sum += data[i][0];
-                    }
-
-                    //check streets
-                    housesPassed ++;
-                    if (housesPassed == N) {
-                        streetsPassed++;
-                        i = N*streetsPassed - 1;
-                        housesPassed = 0;
-                        break;
-                    }
-
+            for (int j = 0; j <= N - 1; j++) {
+                taste = in.nextInt();
+                plan = in.nextInt();
+                if (plan == 0) {
+                    sum = sum + taste;
+                    data[i][j] = 0;
+                } else {
+                    data[i][j] = taste;
                 }
+            } //inner loop
+            data[i][N] = sum;
+        } //outer loop
 
-                if (sum > max) {
-                    max = sum;
+        int kSum = 0;
+        int newKSum = 0;
+
+        int maxSum = 0;
+        int maxKSum = 0;
+
+        for (int i = 0; i < M; i++) {
+
+            kSum = 0;
+
+            for (int j = 0; j <= K - 1; j++) {
+                kSum += data[i][j];
+            } //inner loop
+            for (int j = K; j <= N - 1; j++) {
+                kSum = kSum - data[i][j - K] + data[i][j];
+                if (newKSum < kSum) {
+                    newKSum = kSum;
                 }
-
-            } else {
-
-                //check streets
-                housesPassed ++;
-                if (housesPassed == N) {
-                    streetsPassed++;
-                    i = N*streetsPassed - 1;
-                    housesPassed = 0;
-                    break;
-                }
-
+            } // inner loop
+            data[i][N + 1] = newKSum;
+            maxSum = maxSum + data[i][N];
+            if (maxKSum < data[i][N+1]){
+                maxKSum = data[i][N+1];
             }
+        } //outerloop
 
-        }
-
-        int totalSum = 0;
-
-        for (int i = 0; i < data.length; i++) {
-            if (data[i][1] == 0) {
-                totalSum += data[i][0];
-            }
-        }
-
-        totalSum += max;
-
-        System.out.println(totalSum);
+        System.out.println(maxSum + maxKSum);
 
     }
 }
-
-/*  System.out.println(75+100+30+30);
-    int lost = 25 + 70 + 70 + 70;
-    int marks = 1000 - lost;
-    System.out.println("marks: " + marks);
-*/

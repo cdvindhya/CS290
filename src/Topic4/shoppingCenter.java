@@ -35,6 +35,7 @@ public class shoppingCenter {
         int maxSize = 0;
 
         char rmvd;
+        int lastRemoved = 0;
 
         if (n == 1) { //what if k > 1?
             System.out.println(1);
@@ -42,7 +43,7 @@ public class shoppingCenter {
         }
 
         //populate hash map
-        for (int i = 0; i < 70; i++) {
+        for (int i = 0; i < n; i++) {
 
             char c = charList.charAt(i);
 
@@ -76,53 +77,17 @@ public class shoppingCenter {
             if (queue.size() > k)  { //
                 //dq
                 rmvd = queue.remove();
-                int temp = hash.get(rmvd) + 1;
-                //if (initPoint < temp) {
-                    initPoint = temp;
-                //}
-                hash.remove(rmvd);
-            }
-
-        } //for
-
-        for (int i = 70; i < n; i++) {
-
-            char c = charList.charAt(i);
-
-            if (hash.get(c) == null) { // element not found
-
-                hash.put(c, i);
-
-                queue.add(c);
-                finalPoint = i;
-
-                if (queue.size() <= k ) {
-                    //size
-                    seqSize = finalPoint - initPoint + 1;
-                    if (seqSize > maxSize) {
-                        maxSize = seqSize;
-                    }
+                if (hash.get(rmvd) > hash.get(queue.peek())) {
+                    initPoint = hash.get(queue.peek()) + 1;
+                } else {
+                initPoint = hash.get(rmvd) + 1;
                 }
-
-            } else { //element found
-                hash.replace(c, hash.get(c), i);
-                finalPoint = i;
-
-                //size
-                seqSize = finalPoint - initPoint + 1;
-                if (seqSize > maxSize) {
-                    maxSize = seqSize;
-                }
-
-            }
-
-            if (queue.size() > k)  { //
-                //dq
-                rmvd = queue.remove();
-                int temp = hash.get(rmvd) + 1;
-                //if (initPoint < temp) {
-                initPoint = temp;
-                //}
+                /*int temp = hash.get(rmvd) + 1;
+                if (temp - 1 > lastRemoved) {
+                    initPoint = temp - 1;
+                } else {
+                    initPoint = lastRemoved+1;
+                }*/
                 hash.remove(rmvd);
             }
 
