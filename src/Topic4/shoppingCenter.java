@@ -15,7 +15,7 @@ public class shoppingCenter {
 
         //init data structure, variables
 
-        Queue<Character> queue = new LinkedList<>();
+        TreeMap<Integer, Character> treeMap = new TreeMap<>();
 
         HashMap<Character, Integer> hash = new HashMap<>();
 
@@ -51,10 +51,11 @@ public class shoppingCenter {
 
                 hash.put(c, i);
 
-                queue.add(c);
+
+                treeMap.put(i, c);
                 finalPoint = i;
 
-                if (queue.size() <= k ) {
+                if (treeMap.size() <= k ) {
                     //size
                     seqSize = finalPoint - initPoint + 1;
                     if (seqSize > maxSize) {
@@ -63,7 +64,10 @@ public class shoppingCenter {
                 }
 
             } else { //element found
+                int x = hash.get(c);
                 hash.replace(c, hash.get(c), i);
+                treeMap.remove(x);
+                treeMap.put(i, c);
                 finalPoint = i;
 
                 //size
@@ -74,26 +78,19 @@ public class shoppingCenter {
 
             }
 
-            if (queue.size() > k)  { //
+            if (treeMap.size() > k)  { //
                 //dq
-                rmvd = queue.remove();
-                if (hash.get(rmvd) > hash.get(queue.peek())) {
-                    initPoint = hash.get(queue.peek()) + 1;
-                } else {
-                initPoint = hash.get(rmvd) + 1;
-                }
-                /*int temp = hash.get(rmvd) + 1;
-                if (temp - 1 > lastRemoved) {
-                    initPoint = temp - 1;
-                } else {
-                    initPoint = lastRemoved+1;
-                }*/
+                rmvd = treeMap.firstEntry().getValue();
+                initPoint = treeMap.firstEntry().getKey();
+                treeMap.remove(initPoint);
+                initPoint++;
                 hash.remove(rmvd);
             }
 
         } //for
 
-        if (finalPoint == n - 1 && queue.size() < k) {
+
+        if (finalPoint == n - 1 && treeMap.size() < k) {
             System.out.println(n);
         } else {
             System.out.println(maxSize);
