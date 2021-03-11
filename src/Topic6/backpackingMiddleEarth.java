@@ -1,80 +1,144 @@
 package Topic6;
 
-import java.io.*;
-import java.util.*;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.Arrays;
+import java.util.Stack;
 
-public class fixParantheses {
-
+public class backpackingMiddleEarth {
     public static void main(String[] args) throws IOException {
+
         FastReader in = new FastReader();
-        PrintWriter out = new PrintWriter(System.out);
+        PrintWriter pw = new PrintWriter(System.out);
 
-        String brackets = in.nextLine();
+        int N = in.nextInt();
         Stack stack = new Stack();
-        char[] values = brackets.toCharArray();
 
-        for (int i = 0; i < values.length; i++) {
-            if (isOpening(values[i])) {
-                stack.push(i);
-            } //opening
-            else if (isClosing(values[i])) {
-                if (stack.isEmpty()) {
-                    out.print("IMPOSSIBLE");
-                    out.close();
-                    return;
-                } else {
-                    int index = (int) stack.pop();
-                    if (values[i] == ')' && values[index] != '(') {
-                        values[index] = '(';
-                    } else if (values[i] == '}' && values[index] != '{') {
-                        values[index] = '{';
-                    } else if (values[i] == ']' && values[index] != '[') {
-                        values[index] = '[';
+        int gold = 0;
+        int amber = 0;
+        int crystal = 0;
+        String stuck = "-1 -1 -1";
+
+        Boolean stuckBool = false;
+
+        for (int i = 0; i < N; i++) {
+            String input = in.nextLine();
+            char[] a = input.toCharArray();
+
+            gold = 0;
+            amber = 0;
+            crystal = 0;
+
+            stack = new Stack();
+
+            int index = 0;
+
+            while (index < input.length() && !stuckBool) {
+                if (a[index] == '=') {
+                    index++;
+                } else if (a[index] == '$') {
+                    stack.push(a[index]);
+                    index++;
+                } else if (a[index] == '#') {
+                    stack.push(a[index]);
+                    index++;
+                } else if (a[index] == '@') {
+                    stack.push(a[index]);
+                    index++;
+                } else if (a[index] == 'd') {
+
+                    if (stack.isEmpty()) {
+                        pw.print(stuck); // -1 -1 -1
+                        stuckBool = true;
+                        break;
                     }
-                } //is closing, stack not empty
-            } //closing
-            else { //
-                out.print("IMPOSSIBLE");
-                out.close();
-                return;
+
+                    char c = (char) stack.pop();
+                    if (c != '$') {
+
+                        while (c != '$') {
+                            if (stack.isEmpty()) {
+                                stuckBool = true;
+                                break;
+                            }
+                            c = (char) stack.pop();
+                        }
+
+                    }
+
+                    index++;
+
+                } else if (a[index] == 'n') {
+
+                    if (stack.isEmpty()) {
+                        stuckBool = true;
+                        break;
+                    }
+
+                    char c = (char) stack.pop();
+                    if (c != '@') {
+
+                        while (c != '@') {
+                            if (stack.isEmpty()) {
+                                stuckBool = true;
+                                break;
+                            }
+                            c = (char) stack.pop();
+                        } //while
+
+                    }//if
+
+                    index++;
+
+                } else if (a[index] == 't') {
+
+                    if (stack.isEmpty()) {
+                        stuckBool = true;
+                        break;
+                    }
+
+                    char c = (char) stack.pop();
+                    if (c != '#') {
+
+                        while (c != '#') {
+                            if (stack.isEmpty()) {
+                                stuckBool = true;
+                            }
+                            c = (char) stack.pop();
+                        }
+
+                    }
+
+                    index++;
+
+                }
+
+            } //while
+
+            while (!stack.isEmpty() && !stuckBool) {
+                char c = (char) stack.pop();
+                if (c == '$') {
+                    gold++;
+                } else if (c == '&') {
+                    amber++;
+                } else if (c == '#') {
+                    crystal++;
+                }
             }
-        }
 
-        if (!stack.isEmpty()) {
-            out.print("IMPOSSIBLE");
-            out.close();
-            return;
-        }
+            if (!stuckBool) {
+                String result = "" + gold + " " + amber + " " + crystal;
+                pw.println(result);
+            } else {
+                pw.println(stuck);
+            }
 
-        StringBuilder result = new StringBuilder(values.length);
-        for (int i = 0; i < values.length; i++) {
-            result.append(values[i]);
-        }
-        out.print(result);
-        out.close();
+        } //for loop
 
-    }
+        pw.close();
 
-    public static Boolean isOpening(char c) {
-        if (c == '(') {
-            return true;
-        } else if (c == '{') {
-            return true;
-        } else if (c == '[') {
-            return true;
-        }
-        return false;
-    }
-
-    public static Boolean isClosing(char c) {
-        if (c == ')') {
-            return true;
-        } else if (c == '}') {
-            return true;
-        } else if (c == ']') {
-            return true;
-        }
-        return false;
     }
 
     static class FastReader {

@@ -1,80 +1,14 @@
 package Topic6;
 
-import java.io.*;
-import java.util.*;
+import java.io.DataInputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Arrays;
 
-public class fixParantheses {
+public class fixParanNew {
 
-    public static void main(String[] args) throws IOException {
-        FastReader in = new FastReader();
-        PrintWriter out = new PrintWriter(System.out);
+    public static void main(String[] args) {
 
-        String brackets = in.nextLine();
-        Stack stack = new Stack();
-        char[] values = brackets.toCharArray();
-
-        for (int i = 0; i < values.length; i++) {
-            if (isOpening(values[i])) {
-                stack.push(i);
-            } //opening
-            else if (isClosing(values[i])) {
-                if (stack.isEmpty()) {
-                    out.print("IMPOSSIBLE");
-                    out.close();
-                    return;
-                } else {
-                    int index = (int) stack.pop();
-                    if (values[i] == ')' && values[index] != '(') {
-                        values[index] = '(';
-                    } else if (values[i] == '}' && values[index] != '{') {
-                        values[index] = '{';
-                    } else if (values[i] == ']' && values[index] != '[') {
-                        values[index] = '[';
-                    }
-                } //is closing, stack not empty
-            } //closing
-            else { //
-                out.print("IMPOSSIBLE");
-                out.close();
-                return;
-            }
-        }
-
-        if (!stack.isEmpty()) {
-            out.print("IMPOSSIBLE");
-            out.close();
-            return;
-        }
-
-        StringBuilder result = new StringBuilder(values.length);
-        for (int i = 0; i < values.length; i++) {
-            result.append(values[i]);
-        }
-        out.print(result);
-        out.close();
-
-    }
-
-    public static Boolean isOpening(char c) {
-        if (c == '(') {
-            return true;
-        } else if (c == '{') {
-            return true;
-        } else if (c == '[') {
-            return true;
-        }
-        return false;
-    }
-
-    public static Boolean isClosing(char c) {
-        if (c == ')') {
-            return true;
-        } else if (c == '}') {
-            return true;
-        } else if (c == ']') {
-            return true;
-        }
-        return false;
     }
 
     static class FastReader {
