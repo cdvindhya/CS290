@@ -4,8 +4,8 @@ import java.util.Scanner;
 
 public class functionCalculator {
 
-    static String exp;
-    static int index;
+    static String exp = "";
+    static int index = 0;
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
@@ -37,10 +37,11 @@ public class functionCalculator {
             //no invalid expressions
             int x = 0;
             while (index < exp.length()
-                    && '0' <= exp.charAt(index) &
+                    && '0' <= exp.charAt(index) &&
                     exp.charAt(index) <= '9') {
                 x = x * 10;
-                x += exp.charAt(index++) - '0';
+                x += exp.charAt(index) - '0';
+                index++;
             }
             return x;
         }
