@@ -6,6 +6,7 @@ public class functionCalculator {
 
     static String exp = "";
     static int index = 0;
+    static int m = 1000000007;
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
@@ -19,31 +20,38 @@ public class functionCalculator {
             index++;
             index++;
             index++;
-            int ans = eval();
+            index++;
+            int ans = eval()%m;
             while (exp.charAt(index++) == ',') {
-                ans = ans + eval();
+                ans = (ans + eval())%m;
             }
             return ans;
         } else if (ch == 'm') {
             index++;
             index++;
             index++;
-            int ans = eval();
+            index++;
+            int ans = eval()%m;
             while (exp.charAt(index++) == ',') {
-                ans = ans * eval();
+                ans = (ans * eval())%m;
             }
             return ans;
         } else {
             //no invalid expressions
             int x = 0;
-            while (index < exp.length()
-                    && '0' <= exp.charAt(index) &&
-                    exp.charAt(index) <= '9') {
+            while (index <= exp.length()
+                    && '0' <= ch &&
+                    ch <= '9') {
                 x = x * 10;
-                x += exp.charAt(index) - '0';
+                x += ch - '0';
+                if (index <= exp.length()) {
+                    ch = exp.charAt(index);
+                } else {
+                    break;
+                }
                 index++;
             }
-            return x;
+            return x%m;
         }
     }
 

@@ -24,6 +24,7 @@ public class backpackingMiddleEarth {
         Boolean stuckBool = false;
 
         for (int i = 0; i < N; i++) {
+
             String input = in.nextLine();
             char[] a = input.toCharArray();
 
@@ -32,6 +33,7 @@ public class backpackingMiddleEarth {
             crystal = 0;
 
             stack = new Stack();
+            stuckBool = false;
 
             int index = 0;
 
@@ -73,6 +75,7 @@ public class backpackingMiddleEarth {
                 } else if (a[index] == 'n') {
 
                     if (stack.isEmpty()) {
+                        pw.print(stuck); // -1 -1 -1
                         stuckBool = true;
                         break;
                     }
@@ -86,15 +89,16 @@ public class backpackingMiddleEarth {
                                 break;
                             }
                             c = (char) stack.pop();
-                        } //while
+                        }
 
-                    }//if
+                    }
 
                     index++;
 
                 } else if (a[index] == 't') {
 
                     if (stack.isEmpty()) {
+                        pw.print(stuck); // -1 -1 -1
                         stuckBool = true;
                         break;
                     }
@@ -105,6 +109,7 @@ public class backpackingMiddleEarth {
                         while (c != '#') {
                             if (stack.isEmpty()) {
                                 stuckBool = true;
+                                break;
                             }
                             c = (char) stack.pop();
                         }
@@ -121,7 +126,7 @@ public class backpackingMiddleEarth {
                 char c = (char) stack.pop();
                 if (c == '$') {
                     gold++;
-                } else if (c == '&') {
+                } else if (c == '@') {
                     amber++;
                 } else if (c == '#') {
                     crystal++;
