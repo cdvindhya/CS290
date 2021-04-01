@@ -1,6 +1,5 @@
 package Topic9;
 
-import java.io.*;
 import java.util.*;
 public class KnightCapture {
 
@@ -45,14 +44,13 @@ public class KnightCapture {
             }
         }
 
+        //output
         System.out.println(solve());
-
     }
 
     //helper functions
-
     public static int solve() {
-        Deque <int[]> q = new ArrayDeque<int[]>();
+        Deque <int[]> q = new ArrayDeque<>();
         q.addLast(new int[] {r1, c1});
         dist[r1][c1] = 0;
         while (!q.isEmpty()) {
