@@ -14,6 +14,7 @@ public class Escapee {
 
     static int K;
 
+    //main function call
     public static void main(String[] args) {
 
         //populate A array
